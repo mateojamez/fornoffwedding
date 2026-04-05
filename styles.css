@@ -82,37 +82,61 @@ a:hover {
 .hero {
   position: relative;
   text-align: center;
-  padding: clamp(3rem, 10vw, 6rem) 1.5rem clamp(4rem, 12vw, 7rem);
-  background: linear-gradient(165deg, var(--color-parchment) 0%, var(--color-cream) 45%, #dfd2c0 100%);
+  overflow: hidden;
   border-bottom: 3px double rgba(52, 84, 56, 0.35);
 }
 
-.hero__ornament {
-  width: 120px;
-  height: 1px;
-  margin: 0 auto 1.5rem;
-  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-  box-shadow: 0 0 0 1px rgba(154, 123, 79, 0.3);
+.hero--welcome {
+  --hero-image: url("images/welcome-hero.jpg");
+  min-height: min(88vh, 820px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(5rem, 14vw, 7rem) 1.5rem clamp(3.5rem, 10vw, 5rem);
+  background-color: #2a1f14;
+  background-image: var(--hero-image);
+  background-size: cover;
+  background-position: center;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20, 14, 10, 0.45) 0%,
+    rgba(30, 22, 14, 0.62) 45%,
+    rgba(20, 14, 10, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  margin: 0 auto;
 }
 
 .hero__kicker {
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.65rem;
   font-family: var(--font-display);
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
   font-style: italic;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: rgba(243, 235, 224, 0.88);
 }
 
 .hero__names {
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.85rem;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(2.75rem, 9vw, 4.5rem);
-  line-height: 1.15;
-  color: var(--color-earth);
+  font-size: clamp(2.75rem, 9vw, 4.25rem);
+  line-height: 1.12;
+  color: #faf6f0;
   letter-spacing: 0.02em;
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.35);
 }
 
 .hero__and {
@@ -120,44 +144,29 @@ a:hover {
   font-weight: 400;
   font-style: italic;
   font-size: 0.55em;
-  color: var(--color-forest);
-  margin: 0.15em 0;
+  color: #c9d4c4;
+  margin: 0.12em 0;
 }
 
-.hero__invite {
-  margin: 0 0 2rem;
+.hero__announce {
+  margin: 0 0 1.75rem;
   font-family: var(--font-display);
-  font-size: clamp(1.15rem, 3vw, 1.45rem);
-  color: var(--color-muted);
+  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+  color: rgba(243, 235, 224, 0.92);
+  line-height: 1.45;
 }
 
-.hero__date-block {
-  max-width: 28rem;
-  margin: 0 auto;
-  padding: 1.25rem 1.5rem;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(62, 42, 22, 0.15);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-soft);
-}
-
-.hero__date {
-  display: block;
+.hero--welcome .hero__date {
+  display: inline-block;
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 3.5vw, 1.75rem);
+  font-size: clamp(1.25rem, 3.2vw, 1.65rem);
   font-weight: 600;
-  color: var(--color-forest);
-  margin-bottom: 0.35rem;
-}
-
-.hero__time {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--color-earth);
-}
-
-.hero__time strong {
-  font-weight: 700;
+  color: #e8dcc8;
+  letter-spacing: 0.06em;
+  padding: 0.65rem 1.35rem;
+  border: 1px solid rgba(243, 235, 224, 0.35);
+  background: rgba(0, 0, 0, 0.22);
+  border-radius: var(--radius);
 }
 
 .section {
@@ -352,6 +361,27 @@ a:hover {
   border-bottom: none;
   margin-bottom: 0;
   padding-bottom: 0;
+}
+
+.registry-cta {
+  display: inline-block;
+  margin: 0.25rem 0 0;
+  padding: 0.7rem 1.6rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-cream);
+  background: var(--color-forest);
+  text-decoration: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.registry-cta:hover {
+  color: #fff;
+  background: #2d4530;
+  text-decoration: none;
 }
 
 .party-grid {

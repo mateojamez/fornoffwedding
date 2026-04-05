@@ -13,34 +13,47 @@
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a href="#welcome">Welcome</a>
-      <a href="#when-where">When &amp; Where</a>
-      <a href="#reception">Reception</a>
-      <a href="#dress-code">Dress Code</a>
-      <a href="#adults-only">Adults Only</a>
-      <a href="#rsvp">RSVP</a>
-      <a href="#registry">Registry</a>
-      <a href="#party">Wedding Party</a>
-      <a href="#story">Our Story</a>
-      <a href="#social">Social</a>
+      <a href="#story">Our story</a>
+      <a href="registry-list/index.html">Registry</a>
     </nav>
   </header>
 
   <main>
-    <section id="welcome" class="hero">
-      <div class="hero__ornament" aria-hidden="true"></div>
-      <p class="hero__kicker">Together with their families</p>
-      <h1 class="hero__names">
-        <span class="hero__name" data-placeholder="Partner A">Taylor</span>
-        <span class="hero__and">&amp;</span>
-        <span class="hero__name" data-placeholder="Partner B">Connor</span>
-      </h1>
-      <p class="hero__invite">invite you to celebrate their marriage</p>
-      <div class="hero__date-block">
-        <time datetime="2026-06-21" class="hero__date">Saturday, June 21, 2026</time>
-        <p class="hero__time">Ceremony begins at <strong>4:00 in the afternoon</strong></p>
+    <section id="welcome" class="hero hero--welcome" aria-label="Welcome">
+      <!-- Background photo: add your image at images/welcome-hero.jpg (or change path in styles.css .hero--welcome) -->
+      <div class="hero__scrim" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="hero__kicker">Together with their families</p>
+        <h1 class="hero__names">
+          <span class="hero__name" data-placeholder="Partner A">Taylor</span>
+          <span class="hero__and">&amp;</span>
+          <span class="hero__name" data-placeholder="Partner B">Connor</span>
+        </h1>
+        <p class="hero__announce">invite you to celebrate their wedding</p>
+        <time datetime="2026-10-21" class="hero__date">Wednesday, October 21, 2026</time>
       </div>
     </section>
 
+    <section id="story" class="section section--cream">
+      <div class="section__inner section__inner--narrow">
+        <h2 class="section__title">Our love story</h2>
+        <div class="prose story">
+          <p class="story__drop">
+            We met at [coffee shop / mutual friend’s party / the library / online — your version here] in [year].
+            What started as [a awkward hello / a shared love of bad movies] turned into [your favorite early memory].
+          </p>
+          <p>
+            [A paragraph about dating, moving, adventures, or quiet ordinary Tuesdays that meant everything.]
+          </p>
+          <p>
+            [The proposal — where, when, who cried first.]
+          </p>
+          <p class="story__closing">We cannot wait to celebrate with you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Other sections — uncomment when ready
     <section id="when-where" class="section section--cream">
       <div class="section__inner">
         <h2 class="section__title">When &amp; Where</h2>
@@ -131,27 +144,11 @@
       </div>
     </section>
 
-    <section id="registry" class="section section--cream">
-      <div class="section__inner section__inner--narrow">
-        <h2 class="section__title">Registry</h2>
-        <div class="prose">
-          <p>Your presence is the greatest gift. If you wish to honor us with something more, we are registered at:</p>
-          <ul class="registry-list">
-            <li><a href="#">Store or site name — link</a></li>
-            <li><a href="#">Second registry — link</a></li>
-            <li><a href="#">Honeymoon fund — link</a></li>
-          </ul>
-          <p class="small">Cash gifts may be brought to the reception or sent to [address] if you prefer.</p>
-        </div>
-      </div>
-    </section>
-
     <section id="party" class="section section--dark">
       <div class="section__inner">
         <h2 class="section__title section__title--light">Wedding party</h2>
         <div class="party-grid">
           <article class="party-member">
-            <!-- Replace the div below with: <img class="party-member__photo party-member__photo--img" src="photos/alex.jpg" alt="Alex Morgan" /> -->
             <div class="party-member__photo" aria-hidden="true"></div>
             <h3>Alex Morgan</h3>
             <p class="party-member__role">Maid of honor</p>
@@ -180,25 +177,6 @@
       </div>
     </section>
 
-    <section id="story" class="section section--cream">
-      <div class="section__inner section__inner--narrow">
-        <h2 class="section__title">Our love story</h2>
-        <div class="prose story">
-          <p class="story__drop">
-            We met at [coffee shop / mutual friend’s party / the library / online — your version here] in [year].
-            What started as [a awkward hello / a shared love of bad movies] turned into [your favorite early memory].
-          </p>
-          <p>
-            [A paragraph about dating, moving, adventures, or quiet ordinary Tuesdays that meant everything.]
-          </p>
-          <p>
-            [The proposal — where, when, who cried first.]
-          </p>
-          <p class="story__closing">We cannot wait to celebrate with you.</p>
-        </div>
-      </div>
-    </section>
-
     <section id="social" class="section section--sage">
       <div class="section__inner section__inner--narrow">
         <h2 class="section__title">Social media</h2>
@@ -213,6 +191,8 @@
         </div>
       </div>
     </section>
+    -->
+
   </main>
 
   <footer class="site-footer">
