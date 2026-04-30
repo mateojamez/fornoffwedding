@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>RSVP — Wedding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="rsvp-body">
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="index.html#welcome">Welcome</a>
+      <a href="index.html#story">Our story</a>
+      <a href="registry-list/index.html">Registry</a>
+      <a href="rsvp.html" aria-current="page">RSVP</a>
+    </nav>
+  </header>
+
+  <main class="rsvp-main">
+    <div class="section__inner section__inner--narrow rsvp-page">
+      <h1 class="section__title rsvp-page__title">RSVP</h1>
+
+      <div id="rsvp-lookup" class="rsvp-panel">
+        <p class="rsvp-intro">Enter the last name and phone number from your invitation to find your party.</p>
+        <form id="form-find" class="rsvp-form">
+          <label class="rsvp-field">
+            <span class="rsvp-field__label">Last name</span>
+            <input id="last-name" class="rsvp-input" type="text" autocomplete="family-name" placeholder="Last name" required />
+          </label>
+          <label class="rsvp-field">
+            <span class="rsvp-field__label">Phone number</span>
+            <input id="phone" class="rsvp-input" type="tel" autocomplete="tel" placeholder="Phone number" required />
+          </label>
+          <button type="submit" class="rsvp-btn">Find invitation</button>
+        </form>
+      </div>
+
+      <div id="rsvp-party" class="rsvp-panel" hidden>
+        <h2 id="party-title" class="rsvp-party-title"></h2>
+        <form id="form-rsvp" class="rsvp-form rsvp-form--party">
+          <div id="guest-fields"></div>
+          <div class="rsvp-actions">
+            <button type="submit" class="rsvp-btn">Submit RSVP</button>
+            <button type="button" id="btn-reset-party" class="rsvp-btn rsvp-btn--secondary">Look up a different invitation</button>
+          </div>
+        </form>
+      </div>
+
+      <p id="rsvp-message" class="rsvp-message" role="status" aria-live="polite"></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="footer__names">Taylor Carlson &amp; Connor Fornoff</p>
+    <p class="footer__date"><time datetime="2026-10-21">October 21, 2026</time></p>
+  </footer>
+
+  <script type="module" src="js/rsvp-app.js"></script>
+</body>
+</html>
