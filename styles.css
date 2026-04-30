@@ -95,7 +95,7 @@ a:hover {
 .hero--welcome {
   --hero-image: url("images/taylorcj3.JPG");
   --hero-decal: url("images/goldvictoriandecal.png");
-  min-height: min(92vh, 880px);
+  min-height: min(96vh, 1440px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -224,14 +224,14 @@ a:hover {
 #story.section--cream {
   position: relative;
   z-index: 1;
-  margin-top: clamp(-2.25rem, -4vw, -1rem);
-  background: var(--color-cream);
+  margin-top: clamp(-3.5rem, -6.5vw, -1.5rem);
+  background: transparent;
 }
 
 #story.section--cream::before {
   content: "";
   position: absolute;
-  top: clamp(-4.75rem, -9.5vw, -2.5rem);
+  top: clamp(-6.5rem, -12vw, -3.25rem);
   right: 0;
   bottom: 0;
   left: 0;
@@ -248,6 +248,23 @@ a:hover {
 #story.section--cream .section__inner {
   position: relative;
   z-index: 1;
+}
+
+/* Keep sections after story above the story paper texture layer. */
+#story.section--cream ~ .section,
+#story.section--cream ~ .banner,
+#story.section--cream ~ .site-footer {
+  position: relative;
+  z-index: 2;
+}
+
+#when-where.section {
+  background-color: var(--color-forest);
+  color: var(--color-cream);
+}
+
+#when-where .section__title {
+  color: var(--color-cream);
 }
 
 .section--dark {
@@ -306,6 +323,172 @@ a:hover {
   border: 1px solid rgba(62, 42, 22, 0.12);
   border-radius: var(--radius);
   box-shadow: var(--shadow-soft);
+}
+
+.parchment {
+  position: relative;
+  color: #3b2410;
+  padding: 2rem;
+  margin: 2.5rem auto;
+  border: 2px solid #8b5e2e;
+  border-radius: 10px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(120, 70, 20, 0.12), transparent 25%),
+    radial-gradient(circle at 80% 70%, rgba(80, 40, 10, 0.1), transparent 30%),
+    linear-gradient(135deg, #f3e2b8, #d8b978);
+  box-shadow:
+    inset 0 0 35px rgba(80, 40, 10, 0.25);
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+  transform: rotate(-0.6deg);
+  clip-path: polygon(
+    1% 2%,
+    10% 0%,
+    23% 2%,
+    37% 0.5%,
+    53% 2.5%,
+    67% 0%,
+    83% 1.8%,
+    99% 3.5%,
+    98% 14%,
+    100% 31%,
+    98.2% 48%,
+    99.5% 65%,
+    97.5% 82%,
+    98.8% 96%,
+    88% 99.2%,
+    72% 97.5%,
+    58% 100%,
+    42% 97.2%,
+    27% 99.4%,
+    11% 97.8%,
+    1.5% 94%,
+    0% 78%,
+    2% 61%,
+    0.5% 44%,
+    2.2% 27%,
+    0% 12%
+  );
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.parchment::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.parchment h2 {
+  margin-top: 0;
+  margin-bottom: 0.9rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2rem);
+}
+
+.parchment p {
+  margin: 0 0 0.9rem;
+  line-height: 1.7;
+}
+
+.parchment p:last-child {
+  margin-bottom: 0;
+}
+
+.parchment--subtle {
+  transform: rotate(-0.25deg);
+  clip-path: polygon(
+    1% 1.5%,
+    99% 2%,
+    98.5% 97%,
+    3% 98.5%,
+    0.5% 90%,
+    1.5% 10%
+  );
+}
+
+.parchment--medium {
+  transform: rotate(-0.45deg);
+  clip-path: polygon(
+    1% 2%,
+    12% 0%,
+    28% 1.4%,
+    45% 0.3%,
+    62% 1.9%,
+    78% 0.6%,
+    98% 3%,
+    99.2% 20%,
+    97.8% 42%,
+    99.2% 65%,
+    98% 92%,
+    88% 99%,
+    67% 97.3%,
+    47% 99.5%,
+    23% 98.1%,
+    2% 94%,
+    0.8% 71%,
+    2.2% 49%,
+    0.6% 25%
+  );
+}
+
+.parchment--heavy {
+  transform: rotate(-0.45deg);
+  clip-path: polygon(
+    1.1% 2.4%,
+    4.2% 0.8%,
+    7.5% 2.6%,
+    12.8% 0.4%,
+    18.1% 2.7%,
+    23.3% 0.9%,
+    29.7% 2.1%,
+    35.4% 0.7%,
+    41.9% 2.8%,
+    48.6% 0.6%,
+    55.1% 2.4%,
+    62.9% 0.4%,
+    69.8% 2.6%,
+    76.2% 0.9%,
+    82.7% 2.3%,
+    89.6% 0.5%,
+    96.9% 3.1%,
+    99.3% 9.7%,
+    97.1% 15.8%,
+    99.5% 23.1%,
+    97.8% 31.5%,
+    99.1% 41.4%,
+    97.4% 55%,
+    91.5% 57%,
+    98.8% 59%,
+    99.6% 64.7%,
+    97.2% 72.9%,
+    99.4% 82.1%,
+    97.5% 91.6%,
+    95.9% 97.3%,
+    90.8% 99.1%,
+    84.6% 97.4%,
+    76.8% 99.2%,
+    69.9% 97.1%,
+    61.2% 99.5%,
+    53.7% 97.3%,
+    45.5% 99.4%,
+    37.1% 97.5%,
+    29.2% 99.1%,
+    21.4% 97.2%,
+    13.3% 99.3%,
+    5.4% 97.9%,
+    0.7% 91.4%,
+    2.9% 83.6%,
+    0.8% 74.8%,
+    3.1% 66.4%,
+    1% 55.5%,
+    2.8% 45.3%,
+    0.9% 34.2%,
+    3% 25.7%,
+    1.1% 15.4%,
+    2.6% 7.7%
+  );
 }
 
 .card h3 {
@@ -580,6 +763,16 @@ main {
 }
 
 @media (max-width: 640px) {
+  .hero--welcome {
+    min-height: min(96vh, 960px);
+    padding-bottom: clamp(5rem, 15vw, 7rem);
+    background-position: center 42%;
+  }
+
+  #story.section--cream {
+    margin-top: -2.75rem;
+  }
+
   body {
     background-image:
       radial-gradient(ellipse 100% 85% at 50% -18%, rgba(52, 84, 56, 0.08), transparent 55%),
