@@ -44,6 +44,21 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
+function normalizePhone(value) {
+  return String(value ?? "").replace(/\D/g, "");
+}
+
+/** @param {string | string[] | null | undefined} lookupPhone */
+function phoneMatchesLookup(lookupPhone, normalizedPhone) {
+  if (!normalizedPhone) return false;
+  const phones = Array.isArray(lookupPhone)
+    ? lookupPhone
+    : lookupPhone != null && lookupPhone !== ""
+      ? [lookupPhone]
+      : [];
+  return phones.some((p) => normalizePhone(p) === normalizedPhone);
+}
+
 function renderGuestFields(guests) {
   Object.keys(responses).forEach((k) => delete responses[k]);
 
@@ -61,16 +76,8 @@ function renderGuestFields(guests) {
         </select>
       </label>
       <label class="rsvp-field">
-        <span class="rsvp-field__label">Meal choice</span>
-        <input class="rsvp-input" type="text" placeholder="Chicken, beef, vegetarian, etc." data-guest-id="${escapeHtml(g.id)}" data-field="meal_choice" />
-      </label>
-      <label class="rsvp-field">
         <span class="rsvp-field__label">Dietary restrictions</span>
         <input class="rsvp-input" type="text" placeholder="Allergies or dietary needs" data-guest-id="${escapeHtml(g.id)}" data-field="dietary_restrictions" />
-      </label>
-      <label class="rsvp-field">
-        <span class="rsvp-field__label">Notes</span>
-        <textarea class="rsvp-input rsvp-input--textarea" rows="3" placeholder="Optional note" data-guest-id="${escapeHtml(g.id)}" data-field="notes"></textarea>
       </label>
     </article>
   `
@@ -116,14 +123,15 @@ async function findParty(e) {
   }
 
   const normalizedLastName = els.lastName.value.trim().toLowerCase();
-  const normalizedPhone = els.phone.value.replace(/\D/g, "");
+  const normalizedPhone = normalizePhone(els.phone.value);
 
-  const { data, error } = await supabase
+  const { data: rows, error } = await supabase
     .from("parties")
     .select(
       `
         id,
         party_name,
+        lookup_phone,
         guests (
           id,
           first_name,
@@ -131,17 +139,26 @@ async function findParty(e) {
         )
       `
     )
-    .eq("lookup_last_name", normalizedLastName)
-    .contains("lookup_phone", [normalizedPhone])
-    .single();
+    .ilike("lookup_last_name", normalizedLastName);
 
-  if (error || !data) {
+  if (error) {
+    console.error("RSVP lookup failed:", error);
     setMessage("No invitation found. Please check your last name and phone number.", true);
     return;
   }
 
+  const match = (rows ?? []).find((row) =>
+    phoneMatchesLookup(row.lookup_phone, normalizedPhone)
+  );
+
+  if (!match) {
+    setMessage("No invitation found. Please check your last name and phone number.", true);
+    return;
+  }
+
+  const { lookup_phone: _lookupPhone, ...partyData } = match;
   setMessage("");
-  showParty(data);
+  showParty(partyData);
 }
 
 async function submitRSVP(e) {
@@ -152,9 +169,7 @@ async function submitRSVP(e) {
   const rows = guests.map((guest) => ({
     guest_id: guest.id,
     attending: responses[guest.id]?.attending === "yes",
-    meal_choice: responses[guest.id]?.meal_choice || "",
     dietary_restrictions: responses[guest.id]?.dietary_restrictions || "",
-    notes: responses[guest.id]?.notes || "",
     updated_at: new Date().toISOString(),
   }));
 
