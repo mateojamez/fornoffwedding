@@ -132,7 +132,7 @@ async function findParty(e) {
       `
     )
     .eq("lookup_last_name", normalizedLastName)
-    .eq("lookup_phone", normalizedPhone)
+    .contains("lookup_phone", [normalizedPhone])
     .single();
 
   if (error || !data) {
