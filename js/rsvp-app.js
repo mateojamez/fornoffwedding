@@ -15,19 +15,21 @@ function isConfigReady() {
 
 const els = {
   lookupPanel: document.getElementById("rsvp-lookup"),
+  choosePanel: document.getElementById("rsvp-choose"),
   partyPanel: document.getElementById("rsvp-party"),
   formFind: document.getElementById("form-find"),
   formRsvp: document.getElementById("form-rsvp"),
-  lastName: document.getElementById("last-name"),
-  phone: document.getElementById("phone"),
+  guestName: document.getElementById("guest-name"),
+  guestChoices: document.getElementById("guest-choices"),
   partyTitle: document.getElementById("party-title"),
   guestFields: document.getElementById("guest-fields"),
   message: document.getElementById("rsvp-message"),
   btnReset: document.getElementById("btn-reset-party"),
+  btnBackLookup: document.getElementById("btn-back-lookup"),
 };
 
 let supabase = null;
-/** @type {{ id: string, party_name: string, guests: { id: string, first_name: string, last_name: string }[] } | null} */
+/** @type {{ id: string, party_name: string, guests: { id: string, first_name: string, last_name: string | null }[] } | null} */
 let party = null;
 const responses = {};
 
@@ -44,19 +46,87 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
-function normalizePhone(value) {
-  return String(value ?? "").replace(/\D/g, "");
+function normalizeNamePart(value) {
+  return String(value ?? "").trim().toLowerCase();
 }
 
-/** @param {string | string[] | null | undefined} lookupPhone */
-function phoneMatchesLookup(lookupPhone, normalizedPhone) {
-  if (!normalizedPhone) return false;
-  const phones = Array.isArray(lookupPhone)
-    ? lookupPhone
-    : lookupPhone != null && lookupPhone !== ""
-      ? [lookupPhone]
-      : [];
-  return phones.some((p) => normalizePhone(p) === normalizedPhone);
+/** @param {string} input */
+function parseNameInput(input) {
+  const trimmed = input.trim();
+  if (!trimmed) return { first: "", last: "" };
+  const parts = trimmed.split(/\s+/);
+  return {
+    first: parts[0],
+    last: parts.slice(1).join(" "),
+  };
+}
+
+/** @param {{ first_name: string, last_name?: string | null }} guest */
+function formatGuestName(guest) {
+  const first = String(guest.first_name ?? "").trim();
+  const last = guest.last_name == null ? "" : String(guest.last_name).trim();
+  return last ? `${first} ${last}` : first;
+}
+
+/**
+ * @param {{ first_name: string, last_name?: string | null }} guest
+ * @param {string} userFirst
+ * @param {string} userLast
+ */
+function guestMatchesSearch(guest, userFirst, userLast) {
+  const guestFirst = normalizeNamePart(guest.first_name);
+  const guestLast =
+    guest.last_name == null || String(guest.last_name).trim() === ""
+      ? null
+      : normalizeNamePart(guest.last_name);
+  const uFirst = normalizeNamePart(userFirst);
+  const uLast = userLast ? normalizeNamePart(userLast) : "";
+
+  if (!uFirst) return false;
+
+  if (uLast) {
+    if (guestFirst !== uFirst) return false;
+    if (guestLast === null) return false;
+    return guestLast === uLast;
+  }
+
+  const token = uFirst;
+  if (guestFirst === token) return true;
+  if (guestLast !== null && guestLast === token) return true;
+  return false;
+}
+
+const GUEST_LOOKUP_SELECT = `
+  id,
+  first_name,
+  last_name,
+  party_id,
+  parties (
+    party_name
+  )
+`;
+
+/** @param {import("@supabase/supabase-js").SupabaseClient} db */
+async function fetchGuestCandidates(db, userFirst, userLast) {
+  const byFirst = await db
+    .from("guests")
+    .select(GUEST_LOOKUP_SELECT)
+    .ilike("first_name", userFirst);
+
+  if (byFirst.error) return { data: null, error: byFirst.error };
+
+  const byLast = await db
+    .from("guests")
+    .select(GUEST_LOOKUP_SELECT)
+    .ilike("last_name", userLast || userFirst);
+
+  if (byLast.error) return { data: null, error: byLast.error };
+
+  const merged = new Map();
+  for (const guest of [...(byFirst.data ?? []), ...(byLast.data ?? [])]) {
+    merged.set(guest.id, guest);
+  }
+  return { data: [...merged.values()], error: null };
 }
 
 function renderGuestFields(guests) {
@@ -66,7 +136,7 @@ function renderGuestFields(guests) {
     .map(
       (g) => `
     <article class="rsvp-guest-card" data-guest-id="${escapeHtml(g.id)}">
-      <h2 class="rsvp-guest-card__name">${escapeHtml(g.first_name)} ${escapeHtml(g.last_name)}</h2>
+      <h2 class="rsvp-guest-card__name">${escapeHtml(formatGuestName(g))}</h2>
       <label class="rsvp-field">
         <span class="rsvp-field__label">Attending?</span>
         <select class="rsvp-input" required data-guest-id="${escapeHtml(g.id)}" data-field="attending">
@@ -99,6 +169,7 @@ function renderGuestFields(guests) {
 function showLookup() {
   party = null;
   els.lookupPanel.hidden = false;
+  els.choosePanel.hidden = true;
   els.partyPanel.hidden = true;
   els.formFind.reset();
   setMessage("");
@@ -107,9 +178,72 @@ function showLookup() {
 function showParty(p) {
   party = p;
   els.lookupPanel.hidden = true;
+  els.choosePanel.hidden = true;
   els.partyPanel.hidden = false;
   els.partyTitle.textContent = `RSVP for ${p.party_name}`;
   renderGuestFields(p.guests || []);
+}
+
+/** @param {Array<{ id: string, first_name: string, last_name?: string | null, party_id: string, parties?: { party_name: string } | { party_name: string }[] | null }>} matches */
+function showGuestChoices(matches) {
+  els.lookupPanel.hidden = true;
+  els.choosePanel.hidden = false;
+  els.partyPanel.hidden = true;
+  setMessage("");
+
+  els.guestChoices.innerHTML = matches
+    .map((guest) => {
+      const partyName = Array.isArray(guest.parties)
+        ? guest.parties[0]?.party_name
+        : guest.parties?.party_name;
+      const partyLabel = partyName ? escapeHtml(partyName) : "Invitation";
+      return `
+        <li>
+          <button type="button" class="rsvp-choice" data-party-id="${escapeHtml(guest.party_id)}">
+            <span class="rsvp-choice__name">${escapeHtml(formatGuestName(guest))}
+            </span>
+            <span class="rsvp-choice__party">${partyLabel}</span>
+          </button>
+        </li>
+      `;
+    })
+    .join("");
+
+  els.guestChoices.querySelectorAll(".rsvp-choice").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const partyId = btn.getAttribute("data-party-id");
+      if (partyId) loadParty(partyId);
+    });
+  });
+}
+
+async function loadParty(partyId) {
+  if (!supabase) return;
+
+  const { data: partyData, error } = await supabase
+    .from("parties")
+    .select(
+      `
+        id,
+        party_name,
+        guests (
+          id,
+          first_name,
+          last_name
+        )
+      `
+    )
+    .eq("id", partyId)
+    .single();
+
+  if (error || !partyData) {
+    console.error("Party lookup failed:", error);
+    setMessage("Could not load your invitation. Please try again.", true);
+    return;
+  }
+
+  setMessage("");
+  showParty(partyData);
 }
 
 async function findParty(e) {
@@ -122,43 +256,43 @@ async function findParty(e) {
     return;
   }
 
-  const normalizedLastName = els.lastName.value.trim().toLowerCase();
-  const normalizedPhone = normalizePhone(els.phone.value);
-
-  const { data: rows, error } = await supabase
-    .from("parties")
-    .select(
-      `
-        id,
-        party_name,
-        lookup_phone,
-        guests (
-          id,
-          first_name,
-          last_name
-        )
-      `
-    )
-    .ilike("lookup_last_name", normalizedLastName);
-
-  if (error) {
-    console.error("RSVP lookup failed:", error);
-    setMessage("No invitation found. Please check your last name and phone number.", true);
+  const { first: userFirst, last: userLast } = parseNameInput(els.guestName.value);
+  if (!userFirst) {
+    setMessage("Please enter your name.", true);
     return;
   }
 
-  const match = (rows ?? []).find((row) =>
-    phoneMatchesLookup(row.lookup_phone, normalizedPhone)
+  const { data: candidates, error } = await fetchGuestCandidates(
+    supabase,
+    userFirst,
+    userLast
   );
 
-  if (!match) {
-    setMessage("No invitation found. Please check your last name and phone number.", true);
+  if (error) {
+    console.error("Guest lookup failed:", error);
+    setMessage("No invitation found. Please check the name on your invitation.", true);
     return;
   }
 
-  const { lookup_phone: _lookupPhone, ...partyData } = match;
-  setMessage("");
-  showParty(partyData);
+  const matches = (candidates ?? []).filter((guest) =>
+    guestMatchesSearch(guest, userFirst, userLast)
+  );
+
+  if (matches.length === 0) {
+    setMessage("No invitation found. Please check the name on your invitation.", true);
+    return;
+  }
+
+  const uniqueMatches = [...new Map(matches.map((g) => [g.id, g])).values()];
+  const partyIds = new Set(uniqueMatches.map((g) => g.party_id));
+
+  if (partyIds.size === 1) {
+    setMessage("");
+    await loadParty(uniqueMatches[0].party_id);
+    return;
+  }
+
+  showGuestChoices(uniqueMatches);
 }
 
 async function submitRSVP(e) {
@@ -193,6 +327,10 @@ function init() {
   els.formFind.addEventListener("submit", findParty);
   els.formRsvp.addEventListener("submit", submitRSVP);
   els.btnReset.addEventListener("click", (e) => {
+    e.preventDefault();
+    showLookup();
+  });
+  els.btnBackLookup.addEventListener("click", (e) => {
     e.preventDefault();
     showLookup();
   });
