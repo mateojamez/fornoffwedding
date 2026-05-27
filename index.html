@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Wedding — Names Here</title>
+  <title>Taylor & Connor | Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Corinthia&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
     <nav class="nav" aria-label="Main">
-      <a href="#welcome">Welcome</a>
-      <a href="#story">Our story</a>
+      <a href="index.html" aria-current="page">Home</a>
       <a href="registry-list/index.html">Registry</a>
       <a href="rsvp.html">RSVP</a>
+      <a href="faq.html">FAQs</a>
     </nav>
   </header>
 
@@ -38,6 +38,9 @@
     </section>
 
     <section id="story" class="section section--cream">
+      <div class="story__swans" aria-hidden="true">
+        <img src="images/transparentswan.png" alt="" decoding="async" loading="lazy" />
+      </div>
       <div class="section__inner section__inner--narrow">
         <h2 class="section__title">Our Love Story</h2>
         <div class="prose story">
@@ -87,51 +90,51 @@
             <h2 class="section__title section__title--light info-headers">Evening timeline</h2>
         <ol class="evening-timeline" aria-label="Schedule for the wedding evening">
           <li class="evening-timeline__item">
-            <time class="evening-timeline__time" datetime="">TBD</time>
-            <span class="evening-timeline__marker" aria-hidden="true"></span>
-            <div class="evening-timeline__body">
+            <div class="evening-timeline__content">
+              <time class="evening-timeline__time" datetime="">TBD</time>
               <h3 class="evening-timeline__label">Ceremony</h3>
             </div>
+            <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
-            <time class="evening-timeline__time" datetime="">TBD</time>
-            <span class="evening-timeline__marker" aria-hidden="true"></span>
-            <div class="evening-timeline__body">
+            <div class="evening-timeline__content">
+              <time class="evening-timeline__time" datetime="">TBD</time>
               <h3 class="evening-timeline__label">Cocktail hour</h3>
             </div>
+            <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
-            <time class="evening-timeline__time" datetime="">TBD</time>
-            <span class="evening-timeline__marker" aria-hidden="true"></span>
-            <div class="evening-timeline__body">
+            <div class="evening-timeline__content">
+              <time class="evening-timeline__time" datetime="">TBD</time>
               <h3 class="evening-timeline__label">Dinner</h3>
             </div>
+            <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
-            <time class="evening-timeline__time" datetime="">10:00 PM</time>
-            <span class="evening-timeline__marker" aria-hidden="true"></span>
-            <div class="evening-timeline__body">
+            <div class="evening-timeline__content">
+              <time class="evening-timeline__time" datetime="">10:00 PM</time>
               <h3 class="evening-timeline__label">Reception</h3>
             </div>
+            <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
-            <time class="evening-timeline__time" datetime="">10:00 PM</time>
-            <span class="evening-timeline__marker" aria-hidden="true"></span>
-            <div class="evening-timeline__body">
+            <div class="evening-timeline__content">
+              <time class="evening-timeline__time" datetime="">10:00 PM</time>
               <h3 class="evening-timeline__label">Reception</h3>
             </div>
+            <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
-            <time class="evening-timeline__time" datetime="">10:00 PM</time>
-            <span class="evening-timeline__marker" aria-hidden="true"></span>
-            <div class="evening-timeline__body">
+            <div class="evening-timeline__content">
+              <time class="evening-timeline__time" datetime="">10:00 PM</time>
               <h3 class="evening-timeline__label">Reception</h3>
             </div>
+            <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
         </ol>
           </div>
           <figure class="section-split__figure" aria-hidden="true">
-            <img src="images/rumpel.jpg" alt="" width="426" height="600" loading="lazy" decoding="async" />
+            <img src="images/taylorcj2.JPG" alt="" width="426" height="600" loading="lazy" decoding="async" />
           </figure>
         </div>
       </div>
@@ -141,7 +144,7 @@
       <div class="section__inner">
         <div class="section-split section-split--image-left">
           <figure class="section-split__figure" aria-hidden="true">
-            <img src="images/rumpel.jpg" alt="" width="426" height="600" loading="lazy" decoding="async" />
+            <img src="images/taylorcj1GOLDFRAME.png" alt="" loading="lazy" decoding="async" />
           </figure>
           <div class="section-split__main">
             <h2 class="section__title info-headers">Dress Code</h2>
@@ -164,16 +167,17 @@
     
     <section id="rsvp" class="section section--sage">
       <div class="section__inner">
-        <h2 class="section__title info-headers">R.S.V.P.</h2>
-        <div class="prose prose--light">
-          <p>Please respond by <strong>date</strong> so we can finalize our guest count and seating.</p>
-          <ul class="detail-list detail-list--light">
-            <li><strong>Online:</strong> <a href="rsvp.html">RSVP here</a></li>
-            <li><strong>Email:</strong> <a href="mailto:rsvp@example.com">rsvp@example.com</a></li>
-            <li><strong>Mail:</strong> [optional — include address if you use reply cards]</li>
-          </ul>
-          <p class="small">Include meal choice, song requests, or accessibility needs in your RSVP if applicable.</p>
-        </div>
+        <ul class="action-links">
+          <li>
+            <a class="action-link" href="rsvp.html">RSVP</a>
+          </li>
+          <li>
+            <a class="action-link" href="registry-list/index.html">Registry</a>
+          </li>
+          <li>
+            <a class="action-link" href="faq.html">FAQs</a>
+          </li>
+        </ul>
       </div>
     </section>
 
