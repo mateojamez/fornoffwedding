@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Corinthia&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Pinyon+Script&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body class="home-body">
   <header class="site-header">
     <nav class="nav" aria-label="Main">
       <a href="index.html" aria-current="page">Home</a>
@@ -29,7 +29,7 @@
           <span class="hero__and">&amp;</span>
           <span class="hero__name" data-placeholder="Partner B">Connor</span>
         </h1>
-        <p class="hero__announce">are locked in for rizzle</p>
+        <p class="hero__announce">are celebrating their wedding!</p>
         <time datetime="2026-10-21" class="hero__date">Wednesday, October 21, 2026</time>
         <p class="hero__actions">
           <a class="hero__btn" href="rsvp.html">RSVP</a>
@@ -39,7 +39,7 @@
 
     <section id="story" class="section section--cream">
       <div class="story__swans" aria-hidden="true">
-        <img src="images/transparentswan.png" alt="" decoding="async" loading="lazy" />
+        <img src="images/twoswans.png" alt="" decoding="async" loading="lazy" />
       </div>
       <div class="section__inner section__inner--narrow">
         <h2 class="section__title">Our Love Story</h2>
@@ -87,50 +87,57 @@
       <div class="section__inner">
         <div class="section-split section-split--image-right">
           <div class="section-split__main">
-            <h2 class="section__title section__title--light info-headers">Evening timeline</h2>
+            <h2 class="section__title section__title--light info-headers">Evening Timeline</h2>
         <ol class="evening-timeline" aria-label="Schedule for the wedding evening">
           <li class="evening-timeline__item">
             <div class="evening-timeline__content">
-              <time class="evening-timeline__time" datetime="">TBD</time>
+              <time class="evening-timeline__time" datetime="">4:00PM</time>
               <h3 class="evening-timeline__label">Ceremony</h3>
             </div>
             <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
             <div class="evening-timeline__content">
-              <time class="evening-timeline__time" datetime="">TBD</time>
-              <h3 class="evening-timeline__label">Cocktail hour</h3>
+              <time class="evening-timeline__time" datetime="">4:30 PM</time>
+              <h3 class="evening-timeline__label">Cocktail Hour</h3>
             </div>
             <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
             <div class="evening-timeline__content">
-              <time class="evening-timeline__time" datetime="">TBD</time>
+              <time class="evening-timeline__time" datetime="">5:45 PM</time>
               <h3 class="evening-timeline__label">Dinner</h3>
             </div>
             <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
           <li class="evening-timeline__item">
             <div class="evening-timeline__content">
-              <time class="evening-timeline__time" datetime="">10:00 PM</time>
+              <time class="evening-timeline__time" datetime="">7:00 PM</time>
               <h3 class="evening-timeline__label">Reception</h3>
+            </div>
+            <span class="evening-timeline__marker" aria-hidden="true"></span>
+          </li>
+          <li class="evening-timeline__item">
+            <div class="evening-timeline__content">
+              <time class="evening-timeline__time" datetime="">9:45 PM</time>
+              <h3 class="evening-timeline__label">Reception ends</h3>
             </div>
             <span class="evening-timeline__marker" aria-hidden="true"></span>
           </li>
         </ol>
           </div>
           <figure class="section-split__figure" aria-hidden="true">
-            <img src="images/taylorcj2.JPG" alt="" width="426" height="600" loading="lazy" decoding="async" />
+            <img src="images/taylorcj2framed.png" alt="" width="426" height="600" loading="lazy" decoding="async" />
           </figure>
         </div>
       </div>
     </section>
 
-    <section id="dress-code" class="section section--cream">
+    <section id="dress-code" class="section section--dark">
       <div class="section__inner">
         <div class="section-split section-split--image-left">
           <figure class="section-split__figure" aria-hidden="true">
-            <img src="images/taylorcj1GOLDFRAME.png" alt="" loading="lazy" decoding="async" />
+            <img src="images/taylorcj4framed.png" alt="" loading="lazy" decoding="async" />
           </figure>
           <div class="section-split__main">
             <h2 class="section__title info-headers">Dress Code</h2>
@@ -140,17 +147,21 @@
             Formal attire means:  
           </p>
           <p>
-            Men may wear tuxedo or formal suit and tie.
+            Men may wear tuxedo or 
+          formal <br>suit and tie.
           </p>
           <p>
-            Women may wear long dress, dressy suit, or a formal cocktail dress.
+            Women may wear long dress, dressy suit, <br>
+            or a formal cocktail dress.
           </p>
         </div>
           </div>
         </div>
       </div>
     </section>
-    
+
+    <div class="section-overlap-lace" aria-hidden="true"></div>
+
     <section id="rsvp" class="section section--sage">
       <div class="section__inner">
         <ul class="action-links">
@@ -164,6 +175,7 @@
             <a class="action-link" href="faq.html">FAQs</a>
           </li>
         </ul>
+        <p class="rsvp-deadline"><b>Please RSVP by September 21, 2026</b></p>
       </div>
     </section>
 
